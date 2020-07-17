@@ -7,7 +7,10 @@ import javax.persistence.Id
 
 @Entity
 data class WebsiteUser(
-        @Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long = 0,
         val name: String? = null,
         val email: String? = null
-)
+) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    var id: Long = 0
+}
