@@ -1,0 +1,17 @@
+== User
+
+=== Get Users
+
+operation::user-get[snippets='http-request,http-response,request-parameters,response-fields,links']
+
+=== Post Users
+
+operation::user-post[snippets='http-request,http-response,request-fields']
+
+=== Delete Users
+
+operation::user-delete[snippets='http-request,http-response,path-parameters']
+
+=== Patch Users
+
+operation::user-patch[snippets='http-request,http-response,path-parameters']
