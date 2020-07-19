@@ -23,7 +23,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
-@AutoConfigureRestDocs
 class UserIntegrationTest extends BaseIntegrationTest {
 
     @Autowired
@@ -49,17 +48,6 @@ class UserIntegrationTest extends BaseIntegrationTest {
         then:
         result.andExpect(status().isOk())
         result.andExpect(jsonPath('$._embedded.users', hasSize(2)))
-
-        and:
-        result.andDo(document("user-get", requestParameters(
-                parameterWithName("page").description("Page number"),
-                parameterWithName("size").description("Page size"),
-                parameterWithName("sort").description("Sorting in a form of \"field name,[asc/desc]\"")
-        ), responseCommonHateoasFields("users",
-                fieldWithPath("name").type(STRING).description("The user name"),
-                fieldWithPath("email").type(STRING).description("The email"),
-        ),
-                commonHateoasLinks()))
     }
 
     def "when user is created via POST, then created status is returned"() {
@@ -75,13 +63,6 @@ class UserIntegrationTest extends BaseIntegrationTest {
 
         then:
         result.andExpect(status().isCreated())
-
-        and:
-        result.andDo(document("user-post",
-                requestFields(
-                        fieldWithPath("name").type(STRING).description("The user name"),
-                        fieldWithPath("email").type(STRING).description("The email"),
-                )))
     }
 
     def 'when deleting user via DELETE, then no content status is returned'() {
@@ -93,13 +74,6 @@ class UserIntegrationTest extends BaseIntegrationTest {
 
         then:
         result.andExpect(status().isNoContent())
-
-        and:
-        result.andDo(document("user-delete",
-                pathParameters(
-                        parameterWithName("id").description("The id of the user to be deleted")
-                )
-        ))
     }
 
     def 'when updating user via PATCH, then the user is updated'() {
@@ -114,16 +88,6 @@ class UserIntegrationTest extends BaseIntegrationTest {
         then:
         result.andExpect(status().isOk())
         repository.findById(user.id).get().name == 'Jon Poe'
-
-        and:
-        result.andDo(document("user-patch",
-                pathParameters(
-                        parameterWithName("id").description("The id of the unknown zip city to be deleted")
-                ),
-                requestFields(
-                        fieldWithPath("name").type(STRING).description("The user name"),
-                        fieldWithPath("email").type(STRING).description("The email"),
-                )))
     }
 
 }
