@@ -17,7 +17,7 @@ class BaseIntegrationTest extends Specification {
 
         FieldDescriptor[] descriptors = [
                 fieldWithPath("_embedded").ignored(),
-                fieldWithPath("_embedded.${basePath}[]").type(ARRAY).description("All of unknown zip cities"),
+                fieldWithPath("_embedded.${basePath}[]").type(ARRAY).description("All users"),
         ]
         descriptors += applyPathPrefix("_embedded.${basePath}[].", fieldDescriptors.toList())
         descriptors += [
