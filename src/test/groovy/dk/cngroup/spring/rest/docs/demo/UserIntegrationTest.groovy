@@ -51,14 +51,16 @@ class UserIntegrationTest extends BaseIntegrationTest {
         result.andExpect(jsonPath('$._embedded.users', hasSize(2)))
 
         and:
-        result.andDo(document("user-get", requestParameters(
-                parameterWithName("page").description("Page number"),
-                parameterWithName("size").description("Page size"),
-                parameterWithName("sort").description("Sorting in a form of \"field name,[asc/desc]\"")
-        ), responseCommonHateoasFields("users",
-                fieldWithPath("name").type(STRING).description("The user name"),
-                fieldWithPath("email").type(STRING).description("The email"),
-        ),
+        result.andDo(document("user-get",
+                requestParameters(
+                        parameterWithName("page").description("Page number"),
+                        parameterWithName("size").description("Page size"),
+                        parameterWithName("sort").description("Sorting in a form of \"field name,[asc/desc]\"")
+                ),
+                responseCommonHateoasFields("users",
+                        fieldWithPath("name").type(STRING).description("The user name"),
+                        fieldWithPath("email").type(STRING).description("The email"),
+                ),
                 commonHateoasLinks()))
     }
 
